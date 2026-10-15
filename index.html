@@ -1,17 +1,192 @@
 <!doctype html>
-<html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Növényismeret – 65 faj</title>
-<link rel="stylesheet" href="style.css?v=20261015-fix3">
-<h1>🌿 Növényismeret</h1><p class="muted">65 növény • eredeti vizsgaképek • magyar és tudományos nevek</p>
-<nav class="tabs"><button id="quizTab">Gyakorlás</button><button id="cardsTab" class="secondary">Tanulókártyák</button><button id="listTab" class="secondary">Növénylista és haladás</button></nav>
-<section id="quiz" class="panel">
-<label for="mode">Mit szeretnél gyakorolni?</label><select id="mode"><option value="hu">Csak magyar nevek</option><option value="la">Csak latin nevek</option><option value="both">Magyar és latin együtt</option></select>
-<label for="pool">Mely növények jöjjenek?</label><select id="pool"><option value="active">Csak a még nem megtanultak</option><option value="all">Összes növény (a megtanultak is)</option><option value="learned">Csak a megtanultak – ismétlés</option></select>
-<div id="progress" class="muted"></div><div id="question"><img class="hero" id="plantImg" alt="Növény fotója"><p id="qNumber" class="muted"></p><label for="huAnswer" id="huLabel">Magyar név</label><input id="huAnswer" autocomplete="off" placeholder="Írd be a magyar nevét"><div id="latinBox"><label for="laAnswer">Tudományos (latin) név</label><input id="laAnswer" autocomplete="off" placeholder="Írd be a latin nevét"></div><div class="actions"><button id="check">Ellenőrzés</button><button id="show" class="secondary">Megoldás mutatása</button></div><div id="feedback" class="notice hidden"></div><div class="actions"><button id="markHu" class="secondary">✓ Magyar név megtanulva</button><button id="markLa" class="secondary">✓ Latin név megtanulva</button><button id="next">Következő kép →</button></div></div><div id="empty" class="notice hidden">Ebben a csoportban most nincs növény. Válassz másik szűrőt, vagy a listában állíts vissza növényeket.</div>
-</section>
-<section id="cards" class="panel hidden"><h2>🌱 Tanulókártyák</h2><p class="muted">Nézd meg a képet, próbáld felidézni a nevet, majd fordítsd meg a kártyát.</p><label for="cardMode">Mit tanulsz?</label><select id="cardMode"><option value="both">Magyar és latin együtt</option><option value="hu">Csak magyar</option><option value="la">Csak latin</option></select><label for="cardPool">Melyik növények?</label><select id="cardPool"><option value="active">Még nem megtanultak</option><option value="all">Összes növény</option><option value="learned">Már megtanultak – ismétlés</option></select><p id="cardCount" class="muted"></p><div id="cardContent"><button id="flipCard" type="button" class="flashcard" aria-label="Kártya megfordítása"><img id="cardImg" class="hero" alt="Növény képe"><span id="cardHint">Érintsd meg a kártyát a megoldáshoz</span><div id="cardSolution" class="hidden"></div></button><p id="cardNumber" class="muted"></p><div class="actions"><button id="cardPrev" class="secondary">← Előző</button><button id="cardNext">Következő →</button><button id="cardShuffle" class="secondary">Keverés ↝</button></div><div class="actions"><button id="cardHu" class="secondary">✓ Magyar megtanulva</button><button id="cardLa" class="secondary">✓ Latin megtanulva</button></div></div><div id="cardEmpty" class="notice hidden">Nincs növény ebben a csoportban. Válassz másik szűrőt, vagy a növénylistában tedd vissza a megtanultakat.</div></section>
-<section id="listing" class="panel hidden"><h2>Tanulási lista</h2><div id="stats" class="notice"></div><p class="muted">A magyar és a latin nevet külön-külön jelölheted megtanultnak. Bármikor visszateheted őket a gyakorlásba.</p><label for="filter">Szűrés</label><select id="filter"><option value="all">Mind a 65 növény</option><option value="done">Mindkét név megtanulva</option><option value="partial">Részben megtanulva</option><option value="todo">Egyik név sem megtanulva</option></select><input id="search" placeholder="Keresés magyar vagy latin név alapján"><div id="items"></div><div class="actions"><button id="reset" class="secondary">Összes jelölés törlése</button><button id="export" class="secondary">Haladás mentése fájlba</button><button id="importBtn" class="secondary">Haladás betöltése</button><input id="importFile" type="file" accept="application/json,.json" class="hidden"></div></section>
-<p class="muted">A haladást a böngésző helyben tárolja. Másik telefonon vagy böngészőben a „Haladás mentése” és „betöltése” gombokkal vihető át. Az alkalmazás internet nélkül is működik, ha a képmappa mellette van.</p>
-<p class="muted version-info">Verzió: névváltozatok és címkék – 2. javítás</p>
-</main><script src="novenyek.js?v=20261015-cimkek2"></script>
-<script src="app.js?v=20261015-cimkek2"></script></body></html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Növényismeret – gyakorlás és próbavizsga</title>
+  <link rel="stylesheet" href="style.css?v=20261015-vizsga1">
+</head>
+<body>
+  <main>
+    <h1>🌿 Növényismeret</h1>
+    <p class="muted">65 növény • eredeti vizsgaképek • magyar és tudományos nevek</p>
+
+    <!-- 01. FŐ MENÜ -->
+    <nav class="tabs" aria-label="Gyakorlási módok">
+      <button id="quizTab" type="button">Gyakorlás</button>
+      <button id="cardsTab" type="button" class="secondary">Tanulókártyák</button>
+      <button id="examTab" type="button" class="secondary">📝 Próbavizsga</button>
+      <button id="listTab" type="button" class="secondary">Növénylista és haladás</button>
+    </nav>
+
+    <!-- 02. SZABAD GYAKORLÁS -->
+    <section id="quiz" class="panel">
+      <label for="mode">Mit szeretnél gyakorolni?</label>
+      <select id="mode">
+        <option value="hu">Csak magyar nevek</option>
+        <option value="la">Csak latin nevek</option>
+        <option value="both">Magyar és latin együtt</option>
+      </select>
+
+      <label for="pool">Mely növények jöjjenek?</label>
+      <select id="pool">
+        <option value="active">Csak a még nem megtanultak</option>
+        <option value="all">Összes növény (a megtanultak is)</option>
+        <option value="learned">Csak a megtanultak – ismétlés</option>
+      </select>
+
+      <div id="progress" class="muted"></div>
+      <div id="question">
+        <img class="hero" id="plantImg" alt="Növény fotója">
+        <p id="qNumber" class="muted"></p>
+        <label for="huAnswer" id="huLabel">Magyar név</label>
+        <input id="huAnswer" autocomplete="off" placeholder="Írd be a magyar nevét">
+        <div id="latinBox">
+          <label for="laAnswer">Tudományos (latin) név</label>
+          <input id="laAnswer" autocomplete="off" placeholder="Írd be a latin nevét">
+        </div>
+        <div class="actions">
+          <button id="check" type="button">Ellenőrzés</button>
+          <button id="show" type="button" class="secondary">Megoldás mutatása</button>
+        </div>
+        <div id="feedback" class="notice hidden" aria-live="polite"></div>
+        <div class="actions">
+          <button id="markHu" type="button" class="secondary">✓ Magyar név megtanulva</button>
+          <button id="markLa" type="button" class="secondary">✓ Latin név megtanulva</button>
+          <button id="next" type="button">Következő kép →</button>
+        </div>
+      </div>
+      <div id="empty" class="notice hidden">Ebben a csoportban most nincs növény. Válassz másik szűrőt, vagy a listában állíts vissza növényeket.</div>
+    </section>
+
+    <!-- 03. TANULÓKÁRTYÁK -->
+    <section id="cards" class="panel hidden">
+      <h2>🌱 Tanulókártyák</h2>
+      <p class="muted">Nézd meg a képet, próbáld felidézni a nevet, majd fordítsd meg a kártyát.</p>
+
+      <label for="cardMode">Mit tanulsz?</label>
+      <select id="cardMode">
+        <option value="both">Magyar és latin együtt</option>
+        <option value="hu">Csak magyar</option>
+        <option value="la">Csak latin</option>
+      </select>
+
+      <label for="cardPool">Melyik növények?</label>
+      <select id="cardPool">
+        <option value="active">Még nem megtanultak</option>
+        <option value="all">Összes növény</option>
+        <option value="learned">Már megtanultak – ismétlés</option>
+      </select>
+
+      <p id="cardCount" class="muted"></p>
+      <div id="cardContent">
+        <button id="flipCard" type="button" class="flashcard" aria-label="Kártya megfordítása">
+          <img id="cardImg" class="hero" alt="Növény képe">
+          <span id="cardHint">Érintsd meg a kártyát a megoldáshoz</span>
+          <div id="cardSolution" class="hidden"></div>
+        </button>
+        <p id="cardNumber" class="muted"></p>
+        <div class="actions">
+          <button id="cardPrev" type="button" class="secondary">← Előző</button>
+          <button id="cardNext" type="button">Következő →</button>
+          <button id="cardShuffle" type="button" class="secondary">Keverés ↝</button>
+        </div>
+        <div class="actions">
+          <button id="cardHu" type="button" class="secondary">✓ Magyar megtanulva</button>
+          <button id="cardLa" type="button" class="secondary">✓ Latin megtanulva</button>
+        </div>
+      </div>
+      <div id="cardEmpty" class="notice hidden">Nincs növény ebben a csoportban. Válassz másik szűrőt, vagy a növénylistában tedd vissza a megtanultakat.</div>
+    </section>
+
+    <!-- 04. PRÓBAVIZSGA: a működés az exam.js fájlban található -->
+    <section id="exam" class="panel hidden">
+      <h2>📝 Próbavizsga</h2>
+
+      <div id="examIntro">
+        <p>Valós vizsgahelyzethez hasonló, időre menő gyakorlás. Minden próbavizsgán <strong>50 különböző növény</strong> szerepel véletlenszerűen a 65-ös jegyzékből.</p>
+        <div class="exam-facts">
+          <div><strong>50</strong><span>feladat</span></div>
+          <div><strong>30:00</strong><span>perc</span></div>
+          <div><strong>100</strong><span>max. pont</span></div>
+        </div>
+        <p>Feladatonként 1 pont jár a helyes <strong>magyar növénynévért</strong>, és 1 pont a helyesen írt <strong>tudományos névért</strong>. A jegyzékben elfogadott névváltozatok is jó válaszok.</p>
+        <p class="muted">A megoldások csak a leadás vagy az idő lejárta után láthatók. A pontozás automatikus, az itt megadott nevek alapján; a valódi vizsga értékelésétől eltérhet.</p>
+        <button id="examStart" type="button">Próbavizsga indítása</button>
+      </div>
+
+      <div id="examInProgress" class="hidden">
+        <div class="exam-toolbar">
+          <div>
+            <span class="muted">Feladat</span>
+            <strong id="examPosition">1 / 50</strong>
+          </div>
+          <div class="exam-timer" id="examTimer" role="timer" aria-label="Hátralévő idő">30:00</div>
+        </div>
+        <div id="examAnswered" class="muted">Kitöltve: 0 / 50</div>
+        <progress id="examProgressBar" value="0" max="50" aria-label="Kitöltött feladatok"></progress>
+
+        <div id="examQuestion">
+          <img id="examImage" class="hero" alt="Felismerendő növény fényképe">
+          <label for="examHu">Növény magyar neve (1 pont)</label>
+          <input id="examHu" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="Írd be a magyar nevét">
+          <label for="examLa">Tudományos neve (1 pont)</label>
+          <input id="examLa" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Írd be a teljes tudományos nevet">
+        </div>
+
+        <div class="actions">
+          <button id="examPrev" type="button" class="secondary">← Előző</button>
+          <button id="examNext" type="button">Következő →</button>
+        </div>
+        <p class="muted small">A válaszaid automatikusan mentődnek. A számokra kattintva bármelyik feladathoz visszaléphetsz.</p>
+        <div id="examNavigator" class="exam-navigator" aria-label="Vizsgafeladatok"></div>
+        <div class="actions">
+          <button id="examFinish" type="button" class="exam-finish">Vizsga leadása és értékelés</button>
+        </div>
+        <p class="muted small">Ha elhagyod ezt a fület vagy újratöltöd az oldalt, az óra tovább jár.</p>
+      </div>
+
+      <div id="examResults" class="hidden" aria-live="polite">
+        <div id="examSummary" class="exam-summary"></div>
+        <div class="actions">
+          <button id="examRestart" type="button">Új próbavizsga indítása</button>
+        </div>
+        <h3>Feladatok részletes értékelése</h3>
+        <p class="muted">Itt láthatók a megadott válaszok, a helyes megoldások és az elfogadott névváltozatok is.</p>
+        <button id="examMistakesOnly" type="button" class="secondary" aria-pressed="false">Csak a hibák mutatása</button>
+        <div id="examReview"></div>
+      </div>
+    </section>
+
+    <!-- 05. NÖVÉNYLISTA ÉS TANULÁSI HALADÁS -->
+    <section id="listing" class="panel hidden">
+      <h2>Tanulási lista</h2>
+      <div id="stats" class="notice"></div>
+      <p class="muted">A magyar és a latin nevet külön-külön jelölheted megtanultnak. Bármikor visszateheted őket a gyakorlásba.</p>
+      <label for="filter">Szűrés</label>
+      <select id="filter">
+        <option value="all">Mind a 65 növény</option>
+        <option value="done">Mindkét név megtanulva</option>
+        <option value="partial">Részben megtanulva</option>
+        <option value="todo">Egyik név sem megtanulva</option>
+      </select>
+      <input id="search" placeholder="Keresés magyar vagy latin név alapján">
+      <div id="items"></div>
+      <div class="actions">
+        <button id="reset" type="button" class="secondary">Összes jelölés törlése</button>
+        <button id="export" type="button" class="secondary">Haladás mentése fájlba</button>
+        <button id="importBtn" type="button" class="secondary">Haladás betöltése</button>
+        <input id="importFile" type="file" accept="application/json,.json" class="hidden">
+      </div>
+    </section>
+
+    <p class="muted">A haladást és a folyamatban lévő próbavizsgát a böngésző helyben tárolja. A tanulási jelölések másik telefonra a „Haladás mentése” és „betöltése” gombokkal vihetők át; a vizsga nem része ennek a mentésnek.</p>
+    <p class="muted version-info">Verzió: próbavizsga – 1. változat</p>
+  </main>
+
+  <!-- A sorrend fontos: előbb a növények, majd az alkalmazás, végül a próbavizsga. -->
+  <script src="novenyek.js?v=20261015-vizsga1"></script>
+  <script src="app.js?v=20261015-vizsga1"></script>
+  <script src="exam.js?v=20261015-vizsga1"></script>
+</body>
+</html>

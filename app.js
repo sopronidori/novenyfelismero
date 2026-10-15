@@ -10,7 +10,8 @@
  *  06. Tanulókártyák
  *  07. Lapfülek és eseménykezelők
  *  08. Haladás importálása / exportálása
- *  09. Indítás
+ *  09. Próbavizsga fül bekötése (exam.js)
+ *  10. Indítás
  *
  * A növénynevek a novenyek.js-ben, a színek a style.css-ben vannak.
  */
@@ -464,13 +465,16 @@ function showTab(which) {
   element('quiz').classList.toggle('hidden', which !== 'quiz');
   element('listing').classList.toggle('hidden', which !== 'list');
   element('cards').classList.toggle('hidden', which !== 'cards');
+  element('exam').classList.toggle('hidden', which !== 'exam');
 
   element('quizTab').className = which === 'quiz' ? '' : 'secondary';
   element('listTab').className = which === 'list' ? '' : 'secondary';
   element('cardsTab').className = which === 'cards' ? '' : 'secondary';
+  element('examTab').className = which === 'exam' ? '' : 'secondary';
 
   if (which === 'list') renderPlantList();
   else if (which === 'cards') buildCardDeck();
+  else if (which === 'exam') exam.open();
   else updateStats();
 }
 
@@ -478,6 +482,7 @@ function connectEvents() {
   // Felső menü
   element('quizTab').onclick = () => showTab('quiz');
   element('cardsTab').onclick = () => showTab('cards');
+  element('examTab').onclick = () => showTab('exam');
   element('listTab').onclick = () => showTab('list');
 
   // Gyakorlás
