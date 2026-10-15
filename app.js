@@ -396,13 +396,20 @@ function renderCard() {
   const cardSolution = element('cardSolution');
   cardSolution.replaceChildren();
 
+  // A fő név és a névváltozatok KÜLÖN elemként jelennek meg.
+  // Így a tanulókártyán is egyértelmű, melyik a vizsgajegyzék fő megnevezése.
+  const mainLabel = document.createElement('div');
+  mainLabel.className = 'main-name-label';
+  mainLabel.textContent = 'FŐ MEGNEVEZÉS';
+
   const mainAnswer = document.createElement('div');
   mainAnswer.className = 'primary-answer';
   mainAnswer.textContent = (mode === 'la' ? '' : plant.hu) +
     (mode === 'both' ? '\n' : '') +
     (mode === 'hu' ? '' : plant.la);
-  cardSolution.append(mainAnswer);
+  cardSolution.append(mainLabel, mainAnswer);
 
+  // Az UA. / ELFOGADHATÓ változatok és megjegyzések a fő név ALATT vannak.
   const extras = createNameExtras(plant);
   if (extras) cardSolution.append(extras);
   cardSolution.classList.add('hidden');

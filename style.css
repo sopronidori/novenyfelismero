@@ -268,3 +268,32 @@ code {
 .flashcard .name-extras { text-align: left; }
 .flashcard .name-extra-row { margin-top: 7px; }
 .flashcard #cardSolution .name-extras { font-weight: 400; }
+
+
+/* 2. JAVÍTÁS: a kártya hátoldalán a fő név és a kiegészítések elkülönítése */
+.main-name-label {
+  color: #607769;
+  font-size: .73rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  margin: 8px 0 4px;
+}
+.flashcard #cardSolution {
+  line-height: 1.55;
+  padding: 12px 8px;
+  overflow: visible;
+}
+.flashcard .name-extras {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border-top: 1px solid #c8dace;
+  padding-top: 13px;
+  margin-top: 14px;
+}
+.flashcard .name-extra-row {
+  margin: 10px 0;
+  font-weight: 400;
+  font-size: .96rem;
+}
+.version-info { font-size: .78rem; margin-top: 16px; }
