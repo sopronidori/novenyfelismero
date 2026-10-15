@@ -182,18 +182,26 @@ code {
   white-space:pre-line
 }
 
-
 .flashcard {
-  width:100%;
-  display:block;
-  background:#f5f9f5;
-  color:#173a29;
-  border:2px solid #c4ddca;
-  border-radius:16px;
-  padding:12px;
-  text-align:center;
-  cursor:pointer
+  width: 100%;
+  height: clamp(380px, 68vh, 540px);
+  overflow-y: auto;
+
+  display: block;
+  background: #f5f9f5;
+  color: #173a29;
+  border: 2px solid #c4ddca;
+  border-radius: 16px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
 }
+
+/* A fénykép férjen el a kártyában */
+.flashcard img.hero {
+  height: min(48vh, 400px);
+}
+
 
 .flashcard img {
   pointer-events:none
