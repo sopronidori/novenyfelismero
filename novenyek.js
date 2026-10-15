@@ -17,7 +17,9 @@ const data = [
     "id": 3,
     "hu": "Csavart fűz",
     "la": "Salix matsudana 'Tortuosa'",
-    "img": "kepek/03.jpg"
+    "img": "kepek/03.jpg",
+    "alternatives": {"hu": ["Spirálfűz"]},
+    "alternativeLabel": "UA. (ugyanaz)"
   },
   {
     "id": 4,
@@ -29,13 +31,18 @@ const data = [
     "id": 5,
     "hu": "Csüngő eperfa",
     "la": "Morus alba 'Pendula'",
-    "img": "kepek/05.jpg"
+    "img": "kepek/05.jpg",
+    "alternatives": {"hu": ["Szomorú eperfa", "Csüngő ágú eperfa"]},
+    "alternativeLabel": "UA. (ugyanaz)"
   },
   {
     "id": 6,
     "hu": "Csüngő japánakác",
     "la": "Styphnolobium japonicum 'Pendula'",
-    "img": "kepek/06.jpg"
+    "img": "kepek/06.jpg",
+    "alternatives": {"hu": ["Csüngő ágú japánakác"]},
+    "alternativeLabel": "V. (másik megnevezés)",
+    "note": "A pagodafa a jegyzék szerint hétköznapi elnevezés; nem jelölt UA./elfogadható változat."
   },
   {
     "id": 7,
@@ -71,7 +78,9 @@ const data = [
     "id": 12,
     "hu": "Fehér eperfa",
     "la": "Morus alba",
-    "img": "kepek/12.jpg"
+    "img": "kepek/12.jpg",
+    "alternatives": {"hu": ["Fehér eper"]},
+    "alternativeLabel": "UA. (ugyanaz)"
   },
   {
     "id": 13,
@@ -95,7 +104,9 @@ const data = [
     "id": 16,
     "hu": "Fekete eperfa",
     "la": "Morus nigra",
-    "img": "kepek/16.jpg"
+    "img": "kepek/16.jpg",
+    "alternatives": {"hu": ["Fekete eper"]},
+    "alternativeLabel": "UA. (ugyanaz)"
   },
   {
     "id": 17,
@@ -113,19 +124,25 @@ const data = [
     "id": 19,
     "hu": "Gömbakác",
     "la": "Robinia pseudoacacia 'Umbraculifera'",
-    "img": "kepek/19.jpg"
+    "img": "kepek/19.jpg",
+    "alternatives": {"hu": ["Gömbkoronájú fehér akác"]},
+    "alternativeLabel": "UA. (ugyanaz)"
   },
   {
     "id": 20,
     "hu": "Gömbkőris",
     "la": "Fraxinus ornus 'Mecsek'",
-    "img": "kepek/20.jpg"
+    "img": "kepek/20.jpg",
+    "alternatives": {"hu": ["Gömbkoronájú virágos kőris"]},
+    "alternativeLabel": "UA. (ugyanaz)"
   },
   {
     "id": 21,
     "hu": "Gömbszivarfa",
     "la": "Catalpa bignonioides 'Nana'",
-    "img": "kepek/21.jpg"
+    "img": "kepek/21.jpg",
+    "alternatives": {"hu": ["Gömbkoronájú szivarfa"]},
+    "alternativeLabel": "UA. (ugyanaz)"
   },
   {
     "id": 22,
@@ -137,7 +154,9 @@ const data = [
     "id": 23,
     "hu": "Japán díszcseresznye",
     "la": "Prunus serrulata 'Kanzan'",
-    "img": "kepek/23.jpg"
+    "img": "kepek/23.jpg",
+    "alternatives": {"hu": ["Japáncseresznye"]},
+    "alternativeLabel": "ELFOGADHATÓ"
   },
   {
     "id": 24,
@@ -161,7 +180,9 @@ const data = [
     "id": 27,
     "hu": "Kínai díszkörte",
     "la": "Pyrus calleryana 'Chanticleer'",
-    "img": "kepek/27.jpg"
+    "img": "kepek/27.jpg",
+    "alternatives": {"hu": ["Kínaikörte"]},
+    "alternativeLabel": "ELFOGADHATÓ"
   },
   {
     "id": 28,
@@ -233,7 +254,9 @@ const data = [
     "id": 39,
     "hu": "Platán",
     "la": "Platanus x hispanica",
-    "img": "kepek/39.jpg"
+    "img": "kepek/39.jpg",
+    "alternatives": {"hu": ["Juharlevelű platán", "Közönséges platán"]},
+    "alternativeLabel": "ELFOGADHATÓ"
   },
   {
     "id": 40,
@@ -275,7 +298,9 @@ const data = [
     "id": 46,
     "hu": "Császárfa",
     "la": "Paulownia tomentosa",
-    "img": "kepek/46.jpg"
+    "img": "kepek/46.jpg",
+    "alternatives": {"hu": ["Kínai császárfa"]},
+    "alternativeLabel": "ELFOGADHATÓ"
   },
   {
     "id": 47,
@@ -293,7 +318,9 @@ const data = [
     "id": 49,
     "hu": "Narancseper",
     "la": "Maclura pomifera",
-    "img": "kepek/49.jpg"
+    "img": "kepek/49.jpg",
+    "alternatives": {"hu": ["Oszázsnarancs"]},
+    "alternativeLabel": "ELFOGADHATÓ"
   },
   {
     "id": 50,
@@ -341,7 +368,10 @@ const data = [
     "id": 57,
     "hu": "Ecetfa",
     "la": "Rhus typhina",
-    "img": "kepek/57.jpg"
+    "img": "kepek/57.jpg",
+    "alternatives": {"hu": ["Torzsás ecetfa"]},
+    "alternativeLabel": "ELFOGADHATÓ",
+    "note": "A törzsás szömörce a jegyzékben népi elnevezésként szerepel, nem külön elfogadható válaszként."
   },
   {
     "id": 58,
@@ -353,7 +383,9 @@ const data = [
     "id": 59,
     "hu": "Tövises lepényfa",
     "la": "Gleditsia triacanthos",
-    "img": "kepek/59.jpg"
+    "img": "kepek/59.jpg",
+    "alternatives": {"hu": ["Lepényfa"]},
+    "alternativeLabel": "ELFOGADHATÓ"
   },
   {
     "id": 60,
@@ -365,7 +397,9 @@ const data = [
     "id": 61,
     "hu": "Vérszilva",
     "la": "Prunus cerasifera 'Nigra'",
-    "img": "kepek/61.jpg"
+    "img": "kepek/61.jpg",
+    "alternatives": {"la": ["Prunus cerasifera 'Woodii'"]},
+    "alternativeLabel": "ELFOGADHATÓ"
   },
   {
     "id": 62,
@@ -377,7 +411,9 @@ const data = [
     "id": 63,
     "hu": "Vörös tölgy",
     "la": "Quercus rubra",
-    "img": "kepek/63.jpg"
+    "img": "kepek/63.jpg",
+    "alternatives": {"hu": ["Amerikai vörös tölgy"]},
+    "alternativeLabel": "ELFOGADHATÓ"
   },
   {
     "id": 64,

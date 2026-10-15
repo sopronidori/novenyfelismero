@@ -52,6 +52,60 @@ function normalizeName(value) {
     .trim();
 }
 
+/** A fő név és a jegyzékben kifejezetten elfogadott névváltozatok. */
+function acceptedNames(plant, language) {
+  return [plant[language], ...((plant.alternatives || {})[language] || [])];
+}
+
+/** Akkor helyes, ha a válasz a fő névvel vagy egy elfogadott változattal egyezik. */
+function isAcceptedAnswer(plant, language, answer) {
+  const typed = normalizeName(answer);
+  return typed.length > 0 && acceptedNames(plant, language)
+    .some((name) => normalizeName(name) === typed);
+}
+
+/**
+ * Kiegészítő névváltozatok megjelenítése.
+ * A címke a novenyek.js alternativeLabel mezőjéből származik:
+ * UA. (ugyanaz) / ELFOGADHATÓ / V. (másik megnevezés).
+ * A fő név ettől külön marad, a megjegyzéseket sem duplázzuk.
+ */
+function createNameExtras(plant) {
+  const alternatives = plant.alternatives || {};
+  const rows = [
+    ...(alternatives.hu || []).map((name) => ({ name, language: 'magyar' })),
+    ...(alternatives.la || []).map((name) => ({ name, language: 'tudományos' })),
+  ];
+
+  if (!rows.length && !plant.note) return null;
+
+  const container = document.createElement('div');
+  container.className = 'name-extras';
+
+  for (const row of rows) {
+    const line = document.createElement('div');
+    line.className = 'name-extra-row';
+
+    const label = document.createElement('span');
+    label.className = 'name-extra-label';
+    label.textContent = plant.alternativeLabel || 'ELFOGADHATÓ';
+
+    const text = document.createElement('span');
+    text.textContent = `${row.name} (${row.language} névváltozat)`;
+
+    line.append(label, text);
+    container.append(line);
+  }
+
+  if (plant.note) {
+    const note = document.createElement('div');
+    note.className = 'name-extra-note';
+    note.textContent = `Megjegyzés: ${plant.note}`;
+    container.append(note);
+  }
+  return container;
+}
+
 /** Véletlen elem egy listából. */
 function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
@@ -202,18 +256,32 @@ function showQuizAnswer(checkAnswers) {
 
   if (checkAnswers) {
     if (mode !== 'la') {
-      const correct = normalizeName(element('huAnswer').value) === normalizeName(currentPlant.hu);
+      const correct = isAcceptedAnswer(currentPlant, 'hu', element('huAnswer').value);
       messages.push(`Magyar: ${correct ? '✓ helyes' : '✗ eltér a fő névtől'}`);
     }
     if (mode !== 'hu') {
-      const correct = normalizeName(element('laAnswer').value) === normalizeName(currentPlant.la);
+      const correct = isAcceptedAnswer(currentPlant, 'la', element('laAnswer').value);
       messages.push(`Latin: ${correct ? '✓ helyes' : '✗ eltér a fő névtől'}`);
     }
   }
 
-  messages.push(`Megoldás: ${currentPlant.hu} — ${currentPlant.la}`);
-  element('feedback').textContent = messages.join('\n');
-  element('feedback').classList.remove('hidden');
+  const feedback = element('feedback');
+  feedback.replaceChildren();
+
+  if (messages.length) {
+    const checks = document.createElement('div');
+    checks.textContent = messages.join('\n');
+    feedback.append(checks);
+  }
+
+  const solution = document.createElement('div');
+  solution.className = 'primary-answer';
+  solution.textContent = `FŐ MEGOLDÁS: ${currentPlant.hu} — ${currentPlant.la}`;
+  feedback.append(solution);
+
+  const extras = createNameExtras(currentPlant);
+  if (extras) feedback.append(extras);
+  feedback.classList.remove('hidden');
 }
 
 
@@ -232,6 +300,8 @@ function plantMatchesListFilter(plant, filter, search) {
   const matchesSearch =
     normalizeName(plant.hu).includes(search) ||
     normalizeName(plant.la).includes(search) ||
+    acceptedNames(plant, 'hu').some((name) => normalizeName(name).includes(search)) ||
+    acceptedNames(plant, 'la').some((name) => normalizeName(name).includes(search)) ||
     String(plant.id) === search;
 
   return matchesStatus && matchesSearch;
@@ -270,7 +340,10 @@ function createPlantListItem(plant) {
 
   const buttons = document.createElement('div');
   buttons.append(createLearnedButton(plant, 'hu'), createLearnedButton(plant, 'la'));
-  content.append(name, latin, buttons);
+  const extras = createNameExtras(plant);
+  content.append(name, latin);
+  if (extras) content.append(extras);
+  content.append(buttons);
   row.append(image, content);
   return row;
 }
@@ -320,12 +393,19 @@ function renderCard() {
   element('cardImg').src = plant.img;
   element('cardImg').alt = `${plant.id}. növény képe`;
   element('cardNumber').textContent = `Tananyag sorszáma: ${plant.id}`;
-  element('cardSolution').textContent =
-    (mode === 'la' ? '' : plant.hu) +
+  const cardSolution = element('cardSolution');
+  cardSolution.replaceChildren();
+
+  const mainAnswer = document.createElement('div');
+  mainAnswer.className = 'primary-answer';
+  mainAnswer.textContent = (mode === 'la' ? '' : plant.hu) +
     (mode === 'both' ? '\n' : '') +
     (mode === 'hu' ? '' : plant.la);
+  cardSolution.append(mainAnswer);
 
-  element('cardSolution').classList.add('hidden');
+  const extras = createNameExtras(plant);
+  if (extras) cardSolution.append(extras);
+  cardSolution.classList.add('hidden');
   element('cardHint').classList.remove('hidden');
   element('cardImg').classList.remove('hidden');
 

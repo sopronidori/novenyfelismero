@@ -199,7 +199,7 @@ code {
   pointer-events:none
 }
 
-.flashcard span {
+.flashcard #cardHint {
   display:block;
   margin:10px 0;
   font-size:1rem
@@ -221,3 +221,50 @@ code {
 }
 
 
+
+/* Kiegészítő nevek és a vizsgajegyzék megjegyzései */
+.plant-extras { white-space: pre-line; font-size: .9rem; color: #50685a; margin-top: 5px; line-height: 1.5; }
+
+/* ============================================================
+   NÉVVÁLTOZATOK – világos címkék tanulókártyán / megoldásnál / listában
+   ============================================================ */
+.primary-answer {
+  font-weight: 700;
+  white-space: pre-line;
+  margin: 6px 0;
+}
+.name-extras {
+  border-top: 1px solid #dce8de;
+  margin-top: 10px;
+  padding-top: 9px;
+  font-weight: 400;
+  font-size: .92rem;
+  line-height: 1.5;
+}
+.name-extra-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 5px 0;
+}
+.name-extra-label {
+  display: inline-block;
+  border: 1px solid #aecbb7;
+  background: #e8f2e9;
+  color: #205d3c;
+  border-radius: 5px;
+  padding: 2px 7px;
+  font-size: .78rem;
+  font-weight: 750;
+  letter-spacing: .025em;
+  white-space: nowrap;
+}
+.name-extra-note {
+  color: #53685a;
+  font-size: .86rem;
+  margin-top: 7px;
+}
+.flashcard .name-extras { text-align: left; }
+.flashcard .name-extra-row { margin-top: 7px; }
+.flashcard #cardSolution .name-extras { font-weight: 400; }
