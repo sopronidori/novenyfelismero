@@ -305,3 +305,23 @@ code {
   font-size: .96rem;
 }
 .version-info { font-size: .78rem; margin-top: 16px; }
+
+/* ============================================================
+   TANULÓKÁRTYA – ÁLLANDÓ MAGASSÁG
+   A kártya ne ugorjon össze megfordításkor.
+   ============================================================ */
+
+#flipCard {
+  height: 520px;
+  min-height: 520px;
+  max-height: 520px;
+
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* A fénykép férjen el a kártyán belül. */
+#flipCard #cardImg {
+  max-height: 420px;
+  object-fit: contain;
+}
